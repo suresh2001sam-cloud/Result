@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MS University Semester Result 2026</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: Arial, sans-serif;
+    background: #f8f9fa;
+    min-height: 100vh;
+    padding: 0;
+  }
+
+  /* ── GOOGLE HEADER ── */
+  .g-header {
+    background: #fff;
+    border-bottom: 1px solid #e0e0e0;
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+
+  .g-logo {
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: -1px;
+  }
+  .g-logo span:nth-child(1) { color: #4285F4; }
+  .g-logo span:nth-child(2) { color: #EA4335; }
+  .g-logo span:nth-child(3) { color: #FBBC05; }
+  .g-logo span:nth-child(4) { color: #4285F4; }
+  .g-logo span:nth-child(5) { color: #34A853; }
+  .g-logo span:nth-child(6) { color: #EA4335; }
+
+  .g-searchbar {
+    flex: 1;
+    max-width: 640px;
+    border: 1px solid #dfe1e5;
+    border-radius: 24px;
+    padding: 10px 18px;
+    font-size: 15px;
+    color: #202124;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #fff;
+    box-shadow: 0 1px 6px rgba(32,33,36,0.1);
+  }
+
+  .g-searchbar input {
+    border: none;
+    outline: none;
+    font-size: 15px;
+    color: #202124;
+    flex: 1;
+    background: transparent;
+  }
+
+  .g-search-icon { color: #9aa0a6; font-size: 18px; }
+
+  /* ── TABS ── */
+  .g-tabs {
+    background: #fff;
+    border-bottom: 1px solid #e0e0e0;
+    padding: 0 180px;
+    display: flex;
+    gap: 0;
+  }
+
+  .g-tab {
+    padding: 12px 16px;
+    font-size: 13px;
+    color: #5f6368;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    white-space: nowrap;
+  }
+
+  .g-tab.active {
+    color: #1a73e8;
+    border-bottom-color: #1a73e8;
+    font-weight: 500;
+  }
+
+  /* ── MAIN CONTENT ── */
+  .g-main {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 1.2rem 1rem 3rem 180px;
+  }
+
+  .result-stats {
+    font-size: 13px;
+    color: #70757a;
+    margin-bottom: 1.2rem;
+  }
+
+  /* ── RESULT CARDS ── */
+  .result-card {
+    margin-bottom: 1.6rem;
+    cursor: pointer;
+    max-width: 600px;
+  }
+
+  .result-card:hover .result-title { text-decoration: underline; }
+
+  .result-site-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 3px;
+  }
+
+  .result-favicon {
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px; font-weight: 700; color: #fff;
+    flex-shrink: 0;
+  }
+
+  .result-site { font-size: 13px; color: #202124; }
+  .result-url { font-size: 12px; color: #70757a; }
+
+  .result-title {
+    font-size: 19px;
+    color: #1a0dab;
+    font-weight: 400;
+    margin-bottom: 4px;
+    line-height: 1.4;
+  }
+
+  .result-desc {
+    font-size: 14px;
+    color: #4d5156;
+    line-height: 1.6;
+  }
+
+  .result-desc b { font-weight: 600; color: #202124; }
+
+  .new-badge {
+    display: inline-block;
+    background: #e8f5e9;
+    color: #2e7d32;
+    font-size: 11px;
+    font-weight: 600;
+    border-radius: 3px;
+    padding: 1px 6px;
+    margin-left: 6px;
+    vertical-align: middle;
+  }
+
+  /* ── SITELINK BOX ── */
+  .sitelinks {
+    background: #f8f9fa;
+    border: 1px solid #e8eaed;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-top: 8px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px 24px;
+    max-width: 560px;
+    cursor: pointer;
+  }
+
+  .sitelink-item { font-size: 14px; color: #1a0dab; }
+  .sitelink-item:hover { text-decoration: underline; }
+  .sitelink-sub { font-size: 12px; color: #70757a; }
+
+  /* ── DIVIDER ── */
+  .g-divider {
+    border: none;
+    border-top: 1px solid #e0e0e0;
+    margin: 0.5rem 0 1.5rem;
+    max-width: 600px;
+  }
+
+  /* ── OVERLAY ── */
+  .fool-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    z-index: 999;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .fool-overlay.show { display: flex; }
+
+  .fool-box {
+    background: #fff;
+    border-radius: 16px;
+    padding: 2.5rem 2rem;
+    text-align: center;
+    max-width: 360px;
+    width: 90%;
+    animation: popIn 0.3s ease;
+  }
+
+  @keyframes popIn {
+    from { transform: scale(0.8); opacity: 0; }
+    to   { transform: scale(1);   opacity: 1; }
+  }
+
+  .fool-emoji { font-size: 60px; display: block; margin-bottom: 0.8rem; }
+  .fool-headline { font-size: 26px; font-weight: 700; color: #202124; margin-bottom: 0.4rem; }
+  .fool-date { font-size: 13px; color: #ea4335; font-weight: 600; margin-bottom: 1rem; }
+  .fool-sub {
+    font-size: 15px; color: #5f6368;
+    line-height: 1.7; margin-bottom: 1.5rem;
+  }
+  .fool-confetti { font-size: 22px; margin-bottom: 1rem; letter-spacing: 4px; }
+  .fool-btn {
+    background: #1a73e8;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 0.65rem 2rem;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: Arial, sans-serif;
+    transition: background 0.15s;
+  }
+  .fool-btn:hover { background: #1557b0; }
+
+  /* ── PEOPLE ALSO ASK ── */
+  .paa-box {
+    max-width: 600px;
+    border: 1px solid #e8eaed;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+  }
+
+  .paa-title { font-size: 17px; font-weight: 500; color: #202124; margin-bottom: 0.8rem; }
+
+  .paa-item {
+    padding: 14px 16px;
+    font-size: 14px;
+    color: #202124;
+    border-bottom: 1px solid #e8eaed;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .paa-item:last-child { border-bottom: none; }
+  .paa-item:hover { background: #f8f9fa; }
+  .paa-arrow { color: #70757a; font-size: 12px; }
+
+  @media (max-width: 700px) {
+    .g-main { padding: 1rem; }
+    .g-tabs { padding: 0 1rem; }
+    .sitelinks { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- GOOGLE HEADER -->
+<div class="g-header">
+  <div class="g-logo">
+    <span>G</span><span>o</span><span>o</span><span>g</span><span>l</span><span>e</span>
+  </div>
+  <div class="g-searchbar">
+    <span class="g-search-icon">&#128269;</span>
+    <input type="text" value="MS University semester result 2026" readonly>
+    <span style="color:#9aa0a6; font-size:20px;">&#10005;</span>
+    <span style="color:#4285F4; font-size:18px;">&#128269;</span>
+  </div>
+</div>
+
+<!-- TABS -->
+<div class="g-tabs">
+  <div class="g-tab active">All</div>
+  <div class="g-tab">News</div>
+  <div class="g-tab">Images</div>
+  <div class="g-tab">Videos</div>
+  <div class="g-tab">More</div>
+</div>
+
+<!-- MAIN -->
+<div class="g-main">
+  <div class="result-stats">About 1,24,000 results (0.42 seconds)</div>
+
+  <!-- RESULT 1 - Official with sitelinks -->
+  <div class="result-card" onclick="triggerFool()">
+    <div class="result-site-row">
+      <div class="result-favicon" style="background:#1a3c8f;">M</div>
+      <span class="result-site">msubaroda.ac.in</span>
+    </div>
+    <div class="result-url">https://msubaroda.ac.in › examresults › semester-2026</div>
+    <div class="result-title">
+      MS University Semester Result 2026 — Official
+      <span class="new-badge">NEW</span>
+    </div>
+    <div class="result-desc">
+      <b>MS University</b> (Maharaja Sayajirao University of Baroda) official semester exam result portal. Enter your <b>enrollment number</b> to check marks, grade and pass/fail status for all programmes.
+    </div>
+    <div class="sitelinks" onclick="triggerFool()">
+      <div>
+        <div class="sitelink-item">Check Result Now</div>
+        <div class="sitelink-sub">Enter enrollment number</div>
+      </div>
+      <div>
+        <div class="sitelink-item">UG Result 2026</div>
+        <div class="sitelink-sub">B.A, B.Sc, B.Com</div>
+      </div>
+      <div>
+        <div class="sitelink-item">PG Result 2026</div>
+        <div class="sitelink-sub">M.A, M.Sc, M.Com</div>
+      </div>
+      <div>
+        <div class="sitelink-item">Re-evaluation Form</div>
+        <div class="sitelink-sub">Apply online</div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="g-divider">
+
+  <!-- PEOPLE ALSO ASK -->
+  <div class="paa-title">People also ask</div>
+  <div class="paa-box">
+    <div class="paa-item" onclick="triggerFool()">
+      When will MS University semester result 2026 be declared?
+      <span class="paa-arrow">&#9660;</span>
+    </div>
+    <div class="paa-item" onclick="triggerFool()">
+      How to check MSU Baroda result by enrollment number?
+      <span class="paa-arrow">&#9660;</span>
+    </div>
+    <div class="paa-item" onclick="triggerFool()">
+      MSU result pass percentage this semester?
+      <span class="paa-arrow">&#9660;</span>
+    </div>
+    <div class="paa-item" onclick="triggerFool()">
+      What is the re-evaluation last date for MSU 2026?
+      <span class="paa-arrow">&#9660;</span>
+    </div>
+  </div>
+
+  <hr class="g-divider">
+
+  <!-- RESULT 2 -->
+  <div class="result-card" onclick="triggerFool()">
+    <div class="result-site-row">
+      <div class="result-favicon" style="background:#b91c1c;">R</div>
+      <span class="result-site">results.msubaroda.ac.in</span>
+    </div>
+    <div class="result-url">https://results.msubaroda.ac.in › ug-pg › sem › 2026</div>
+    <div class="result-title">MSU Baroda UG / PG Semester Results — Official Result Portal</div>
+    <div class="result-desc">
+      MS University official result server — all faculties. <b>B.A, B.Sc, B.Com, M.A, M.Sc, M.Com, B.Tech, LLB</b> and all other programmes updated. April 2026 examination results live now.
+    </div>
+  </div>
+
+  <hr class="g-divider">
+
+  <!-- RESULT 3 -->
+  <div class="result-card" onclick="triggerFool()">
+    <div class="result-site-row">
+      <div class="result-favicon" style="background:#065f46;">E</div>
+      <span class="result-site">examresults.net</span>
+    </div>
+    <div class="result-url">https://examresults.net › gujarat › ms-university-result-2026</div>
+    <div class="result-title">MS University Result 2026 — Direct Link, Check Instantly</div>
+    <div class="result-desc">
+      <b>MS University Baroda</b> semester result declared! Get direct link to check your score. Fast result checking — no waiting, no login needed. All semesters covered.
+    </div>
+  </div>
+
+  <hr class="g-divider">
+
+  <!-- RESULT 4 -->
+  <div class="result-card" onclick="triggerFool()">
+    <div class="result-site-row">
+      <div class="result-favicon" style="background:#4c1d95;">i</div>
+      <span class="result-site">indiaresults.com</span>
+    </div>
+    <div class="result-url">https://indiaresults.com › gujarat › ms-university › sem-result</div>
+    <div class="result-title">MS University Semester Result — IndiaResults.com</div>
+    <div class="result-desc">
+      Instant result access for all <b>MS University</b> students. Arts, Science, Commerce, Engineering, Law, Fine Arts and more. Check your marks and download marksheet PDF.
+    </div>
+  </div>
+
+  <hr class="g-divider">
+
+  <!-- RESULT 5 -->
+  <div class="result-card" onclick="triggerFool()">
+    <div class="result-site-row">
+      <div class="result-favicon" style="background:#b45309;">G</div>
+      <span class="result-site">gujaratuniversityresult.in</span>
+    </div>
+    <div class="result-url">https://gujaratuniversityresult.in › msu-baroda-result-2026</div>
+    <div class="result-title">MSU Baroda Semester Result 2026 — Download Marksheet</div>
+    <div class="result-desc">
+      Check and download your <b>MSU Baroda semester marksheet</b> online. Result declared for 1st, 2nd, 3rd, 4th, 5th, 6th semester students. Click here for result link.
+    </div>
+  </div>
+
+</div>
+
+<!-- APRIL FOOL OVERLAY -->
+<div class="fool-overlay" id="fool-overlay">
+  <div class="fool-box">
+    <div class="fool-confetti">&#127881; &#127881; &#127881;</div>
+    <span class="fool-emoji">&#129315;</span>
+    <div class="fool-headline">April Fool!</div>
+    <div class="fool-date">1 April 2026</div>
+    <div class="fool-sub">
+      Result abhi nahi aaya bhai! &#128514;<br>
+      Aap ek dum fool ho gaye!<br><br>
+      <strong>Happy April Fools Day!</strong><br>
+      Apne dosto ko bhi bhejo aur unhe bhi fool karo! &#128517;
+    </div>
+    <button class="fool-btn" onclick="document.getElementById('fool-overlay').classList.remove('show')">
+      Theek hai, samajh gaya &#128514;
+    </button>
+  </div>
+</div>
+
+<script>
+  function triggerFool() {
+    document.getElementById('fool-overlay').classList.add('show');
+  }
+
+  document.getElementById('fool-overlay').addEventListener('click', function(e) {
+    if (e.target === this) this.classList.remove('show');
+  });
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') document.getElementById('fool-overlay').classList.remove('show');
+  });
+</script>
+
+</body>
+</html>
